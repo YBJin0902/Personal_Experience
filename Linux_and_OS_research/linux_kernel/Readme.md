@@ -776,6 +776,122 @@ System Call Wrapper 是什麼？ 中文常翻譯為「系統呼叫包裝函式�
 
 </br>
 
+### 2 ) Process Management：進程管理
+
+這邊的東西就會開始複雜起來，我將內容轉移到 [os-process-management](../OS_process_management/Readme.md) 中做說明
+
+</br>
+
+### 3 ) Memory Management：記憶體管理
+
+Memory Management 的主要用途為：Memory 要怎麼分配、映射、隔離、回收，以及讓每個 Process 看起來都擁有自己的 Memory。
+
+```mermaid
+flowchart TB
+    A[Memory Management] --> B[Virtual Memory]
+    B --> C[Memory Manager]
+
+    C --> D[Physical Memory]
+    C --> E[Page Allocator]
+    C --> F[SLUB / Slab]
+    C --> G[Page Tables]
+    C --> H[Page Cache]
+    C --> I[Reclaim / Swap]
+```
+
+</br>
+
+Linux Memory Management 主要需要處理：
+- Physical Memory 管理
+- Virtual Memory 管理
+- Process Address Space
+- Page Table
+- MMU Mapping
+- Page Fault
+- Demand Paging
+- Copy-on-Write
+- Kernel Memory Allocation
+- User Memory Allocation
+- Page Cache
+- Memory Reclaim
+- Swap
+- NUMA
+- Huge Page
+- Memory Mapping
+- Memory Protection
+- Out Of Memory Handling
+
+整體的架構會像是：
+
+```mermaid
+flowchart TB
+    MM[Linux Memory Management]
+
+    MM --> VM[Virtual Memory]
+    MM --> PM[Physical Memory]
+    MM --> KA[Kernel Allocation]
+    MM --> PC[Page Cache]
+    MM --> RC[Reclaim]
+    MM --> NUMA[NUMA]
+
+    VM --> MMU[MMU]
+    VM --> PT[Page Tables]
+    VM --> VMA[VMA]
+    VM --> PF[Page Fault]
+
+    PM --> NODE[NUMA Node]
+    NODE --> ZONE[Memory Zone]
+    ZONE --> PAGE[Physical Page]
+
+    KA --> BUDDY[Buddy Allocator]
+    KA --> SLUB[SLUB]
+    KA --> VMALLOC[vmalloc]
+
+    RC --> KSWAPD[kswapd]
+    RC --> SWAP[Swap]
+    RC --> OOM[OOM]
+```
+
+</br>
+
+Physical Address 與 Virtual Address，先來理解這兩種 Address。
+
+Physical Address 是真正對應 RAM / Memory Controller 所看到的硬體記憶體位置；Virtual Address 則是相反，是程式語言之間在使用的。
+
+因此我們可以得到一個相對的映射關係：
+
+```mermaid
+flowchart LR
+    APP[Application] --> VA[Virtual Address]
+    VA --> MMU[MMU]
+    MMU --> PA[Physical Address]
+    PA --> RAM[RAM]
+```
+
+</br>
+
+那簡單的問題來了，為甚麼會需要 Virtual Address。
+
+先來說明幾個 Virtual Address 的用途：
+
+1. Process Isolation：
+
+
+
+</br>
+
+### 4 ) 
+
+</br>
+
+### 5 ) 
+
+</br>
+
+### 6 ) 
+
+</br>
+
 # Bootloader
 
 我們已經先瞭解了 Linux Kernel 的基本架構與 System Call Interface。
@@ -831,8 +947,40 @@ graph TD
     D --> E[Linux Kernel]
 ```
 
+所以 Bootloader 通常是一個 Boot Chain，而不一定只是一支程式。
 
 </br>
+
+### Bootloader 不屬於 Linux Kernel
+
+先準確區分一下，Bootloader 與 Linux Kernel 是兩套不同的軟體。
+- Bootloader 的任務是 Kernel 執行之前完成啟動準備。
+- Linux Kernel 開始執行後，Bootloader 的主要工作基本上已經結束
+
+</br>
+
+### Bootloader 的核心任務
+
+不同 CPU、SoC、Board 的 Bootloader 工作內容不同，但 Embedded Linux 大致可以整理成：
+
+1. CPU / SoC 基本初始化 
+2. Clock 初始化 
+3. Pin / MUX 初始化 
+4. DDR 初始化
+5. Boot Device 初始化 
+6. 找到 Kernel Image 
+7. 將 Kernel 載入 RAM 
+8. 準備 Device Tree 
+9. 準備 initramfs / initrd 
+10. 準備 Kernel Command Line 
+11. 設定 CPU 執行狀態 
+12. 將控制權交給 Linux Kernel
+
+Linux 官方對 AArch64 boot protocol 所列的最低要求也包含：
+- Initialize RAM
+- Setup Device Tree
+- 必要時解壓 Kernel
+- 呼叫 Kernel Image
 
 # root file system
 
