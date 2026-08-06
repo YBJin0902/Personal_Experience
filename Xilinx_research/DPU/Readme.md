@@ -78,7 +78,7 @@ Vitis Unified Software Platform 是 AMD 為了讓軟體工程師也能輕鬆使�
 
 </br>
 
-<img src="images/AMD-DPU-Options.png" width="500" height="200">
+<img src="images/AMD-DPU-Options.png">
 
 </br>
 
@@ -86,7 +86,7 @@ Vitis Unified Software Platform 是 AMD 為了讓軟體工程師也能輕鬆使�
 
 </br>
 
-<img src="images/AMD-DPU-download-source.png" width="500" height="200">
+<img src="images/AMD-DPU-download-source.png">
 
 </br>
 
@@ -145,7 +145,7 @@ Xilinx 這一個 DPU 的 IP 基本上是針對 CNN 去做設計的，所以在�
 
 </br>
 
-<img src="images/DPU-IP-customize-page.png" width="700" height="200">
+<img src="images/DPU-IP-customize-page.png">
 
 由上至下依序解釋：</br>
 
@@ -153,17 +153,17 @@ Xilinx 這一個 DPU 的 IP 基本上是針對 CNN 去做設計的，所以在�
 
 - 決定一個 IP 包含幾個獨立的 DPU 核心，每個核心都可以獨立執行一個推論工作。
 
-- 核心數增加時，大部分資源接近線性增加：$Resource_{total}$ ​≈ $Resource_{core}​$ × $N_{cores}$ ​+ $Shared$ $Logic$
+- 核心數增加時，大部分資源接近線性增加： $Resource_{total}$ ​≈ $Resource_{core}​$ × $N_{cores}$ ​+ $Shared$ $Logic$
     - 例如 B4096、High DSP Usage 單核心基礎配置約需要 642 DSP。理想估算：
-</br>
+
 </br>
 
-    | 核心數 | 基礎 DSP 粗估 |
-    | :--: | :--------: |
-    |   1 |     約 642 |
-    |   2 |    約 1284 |
-    |   3 |    約 1926 |
-    |   4 |    約 2568 |
+| 核心數 | 基礎 DSP 粗估 |
+| :--: | :--------: |
+|   1 |     約 642 |
+|   2 |    約 1284 |
+|   3 |    約 1926 |
+|   4 |    約 2568 |
 
 </br>
 
@@ -327,7 +327,7 @@ Xilinx 這一個 DPU 的 IP 基本上是針對 CNN 去做設計的，所以在�
 
 IP 設定基本這邊就完成了，接下來是接線的部分
 
-<img src="images/DPU_vivado_wire.png" width="1000" height="200">
+<img src="images/DPU_vivado_wire.png">
 
 </br>
 
